@@ -1,7 +1,48 @@
 import React, { useState } from 'react';
 import QuantumCircuit from 'quantum-circuit';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaAtom, FaInfoCircle, FaHistory, FaWaveSquare, FaBrain, FaChartLine } from 'react-icons/fa';
+import { FaInfoCircle, FaHistory, FaWaveSquare, FaBrain, FaChartLine,FaAtom } from 'react-icons/fa';
+
+const QuantumComputerIcon = () => (
+  <svg
+    viewBox="0 0 64 64"
+    className="w-16 h-16 text-cyan-400 animate-pulse"
+    fill="currentColor"
+  >
+    {/* Main coin circle */}
+    <circle cx="32" cy="32" r="28" fill="url(#coinGradient)" stroke="currentColor" strokeWidth="2"/>
+    
+    {/* Inner decorative ring */}
+    <circle cx="32" cy="32" r="24" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.5"/>
+    
+    {/* Head side text */}
+    <text x="32" y="34" 
+          textAnchor="middle" 
+          fontSize="16"
+          fill="currentColor"
+          className="coin-text">
+      H
+    </text>
+    
+    {/* Tail side text */}
+    <text x="32" y="34" 
+          textAnchor="middle" 
+          fontSize="16"
+          fill="currentColor"
+          className="coin-text"
+          transform="rotate(180 32 32)">
+      T
+    </text>
+    
+    {/* Gradient definition */}
+    <defs>
+      <radialGradient id="coinGradient" cx="0.3" cy="0.3">
+        <stop offset="0%" stopColor="rgba(255,255,255,0.2)"/>
+        <stop offset="100%" stopColor="rgba(0,0,0,0.1)"/>
+      </radialGradient>
+    </defs>
+  </svg>
+);
 
 const QuantumCoinFlip = () => {
   const [isFlipping, setIsFlipping] = useState(false);
@@ -141,7 +182,7 @@ const QuantumCoinFlip = () => {
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center mb-4">
-            <FaAtom className="text-6xl text-cyan-400 animate-pulse mr-4" />
+            <QuantumComputerIcon />
             <h1 className="text-6xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 text-transparent bg-clip-text">
               Quantum Coin Flip
             </h1>
@@ -152,17 +193,31 @@ const QuantumCoinFlip = () => {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Left Column - Quantum Circuit Visualization */}
-          <div className="lg:col-span-3 bg-black/30 rounded-2xl p-6 backdrop-blur-lg">
+          <div className="lg:col-span-3 bg-black/30 rounded-2xl p-6 backdrop-blur-lg max-h-[500px] flex flex-col">
             <h3 className="flex items-center text-cyan-400 text-xl mb-4">
               <FaWaveSquare className="mr-2" />
               Quantum Circuit
             </h3>
-            <div className="quantum-circuit-display">
-              <QuantumCircuitDisplay />
-              <div className="mt-4 text-sm text-cyan-300">
-                <p>1. Initialize |0⟩ state</p>
-                <p>2. Apply Hadamard (H) gate</p>
-                <p>3. Measure quantum state</p>
+            <div className="quantum-circuit-display flex-grow flex flex-col justify-between">
+              <div>
+                <QuantumCircuitDisplay />
+                <div className="mt-4 text-sm text-cyan-300">
+                  <p>1. Initialize |0⟩ state</p>
+                  <p>2. Apply Hadamard (H) gate</p>
+                  <p>3. Measure quantum state</p>
+                </div>
+              </div>
+              
+              {/* Add additional content to fill space */}
+              <div className="mt-auto pt-4 border-t border-cyan-400/20">
+                <div className="text-xs text-cyan-300/70">
+                  <p className="mb-2">Circuit Components:</p>
+                  <ul className="space-y-1">
+                    <li>• Hadamard Gate (H): Creates quantum superposition</li>
+                    <li>• Measurement: Collapses quantum state</li>
+                    <li>• Quantum Wire: Carries quantum information</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -263,11 +318,25 @@ const QuantumCoinFlip = () => {
                             future: "Quantum Machine Learning could analyze all possible solutions simultaneously."
                           },
                           {
-                            gate: "X Gate (NOT)",
+                            gate: "X Gate (NOT)", 
                             description: "Flips a qubit from |0⟩ to |1⟩ or vice versa",
                             future: "Quantum Error Correction in fault-tolerant quantum computers."
                           },
-                          // Add other gates...
+                          {
+                            gate: "Z Gate",
+                            description: "Adds a phase difference between states",
+                            future: "Quantum Cryptography systems that could be completely unhackable, as any attempt to intercept the message would collapse the quantum state."
+                          },
+                          {
+                            gate: "CNOT Gate",
+                            description: "A two-qubit gate for controlled operations",
+                            future: "Quantum Simulation of complex molecular interactions could revolutionize materials science, leading to perfect solar panels or room-temperature superconductors."
+                          },
+                          {
+                            gate: "Toffoli Gate",
+                            description: "A three-qubit gate that enables reversible computing",
+                            future: "Climate modeling that could process vast amounts of data to predict weather patterns and climate change with unprecedented accuracy."
+                          }
                         ].map(gate => (
                           <div key={gate.gate} className="bg-white/5 p-4 rounded-lg">
                             <h4 className="text-cyan-400 font-bold">{gate.gate}</h4>

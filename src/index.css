@@ -46,10 +46,24 @@
   border-radius: 8px;
   padding: 1rem;
   background: rgba(0, 255, 255, 0.05);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .quantum-circuit-display svg {
   filter: drop-shadow(0 0 2px rgba(0, 255, 255, 0.5));
+}
+
+/* Animation for the quantum computer icon */
+@keyframes quantum-pulse {
+  0% { filter: drop-shadow(0 0 2px rgba(0, 255, 255, 0.5)); }
+  50% { filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.8)); }
+  100% { filter: drop-shadow(0 0 2px rgba(0, 255, 255, 0.5)); }
+}
+
+.animate-quantum {
+  animation: quantum-pulse 2s infinite;
 }
 
 .quantum-stats-item {
