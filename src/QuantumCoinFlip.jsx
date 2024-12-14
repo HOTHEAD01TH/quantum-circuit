@@ -19,12 +19,24 @@ const QuantumCoinFlip = () => {
     currentStreak: 0,
     longestStreak: 0
   });
+  // Add this state for quantum state display
+  const [quantumStateText, setQuantumStateText] = useState('Initial State: |ψ⟩ = |0⟩');
 
   const performQuantumFlip = async () => {
     if (isFlipping) return;
     
     setIsFlipping(true);
     setCircuitVisible(true);
+    
+    // Initial state
+    setQuantumStateText('Initial State: |ψ⟩ = |0⟩');
+    
+    // Show superposition after delay
+    setTimeout(() => {
+      setSuperpositionVisible(true);
+      setQuantumStateText('Superposition:\nH|0⟩ → |ψ⟩ = (|H⟩ + |T⟩)/√2\nBoth heads and tails at once!');
+    }, 800);
+
     setMeasurementResult(null);
     setCoinRotation(0);
 
@@ -50,6 +62,9 @@ const QuantumCoinFlip = () => {
         // Update state with result
         setMeasurementResult(result);
         setCoinRotation(result === "Heads" ? 0 : 180);
+
+        // After measurement
+        setQuantumStateText(`Measurement:\n${result}!\nState: |${result[0]}⟩`);
         
         // Calculate probability from the quantum state
         const probs = circuit.probabilities();
@@ -194,14 +209,85 @@ const QuantumCoinFlip = () => {
 
               {/* Quantum State Display */}
               <motion.div 
-                className="quantum-state-display mt-8"
+                className="quantum-state-display mt-8 p-6 rounded-xl bg-black/30 backdrop-blur-lg"
                 animate={{
                   backgroundColor: superpositionVisible ? 
                     'rgba(0, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)'
                 }}
               >
-                {/* State content */}
+                <pre className="font-mono text-cyan-400 text-center whitespace-pre-wrap">
+                  {quantumStateText}
+                </pre>
               </motion.div>
+
+              {/* Educational Section */}
+              <motion.section 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="mt-16 max-w-4xl mx-auto"
+              >
+                <div className="bg-black/30 rounded-2xl p-8 backdrop-blur-lg">
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text mb-6">
+                    How is this different from regular computing?
+                  </h2>
+                  
+                  <div className="space-y-6 text-gray-300">
+                    <p className="leading-relaxed">
+                      In classical computing (like your phone or laptop), a coin flip would use Math.random() - 
+                      basically picking either 0 or 1. The coin is always in one definite state.
+                    </p>
+
+                    <div className="pl-6 border-l-2 border-cyan-400">
+                      <h3 className="text-xl text-cyan-400 mb-3">But in quantum computing:</h3>
+                      <ul className="space-y-2">
+                        <li>• We start with a quantum bit (qubit) in state |0⟩</li>
+                        <li>• Using a Hadamard gate (H), we create a superposition where the coin exists in multiple realities simultaneously!</li>
+                        <li>• In one "universe" it's heads, in another it's tails - and these universes coexist until we measure</li>
+                        <li>• When we measure it, these parallel realities "collapse" into our single reality</li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-cyan-400/10 p-6 rounded-xl">
+                      <h3 className="text-xl text-cyan-400 mb-3">What are Quantum Gates?</h3>
+                      <p className="mb-4">
+                        Quantum gates are like the basic building blocks of quantum circuits - similar to how 
+                        classical computers use AND, OR, and NOT gates. They manipulate qubits to perform 
+                        quantum operations.
+                      </p>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {[
+                          {
+                            gate: "Hadamard (H) Gate",
+                            description: "Creates superposition by putting a qubit in an equal mixture of 0 and 1 states.",
+                            future: "Quantum Machine Learning could analyze all possible solutions simultaneously."
+                          },
+                          {
+                            gate: "X Gate (NOT)",
+                            description: "Flips a qubit from |0⟩ to |1⟩ or vice versa",
+                            future: "Quantum Error Correction in fault-tolerant quantum computers."
+                          },
+                          // Add other gates...
+                        ].map(gate => (
+                          <div key={gate.gate} className="bg-white/5 p-4 rounded-lg">
+                            <h4 className="text-cyan-400 font-bold">{gate.gate}</h4>
+                            <p className="text-sm text-gray-400 mt-2">{gate.description}</p>
+                            <p className="text-xs text-cyan-300 mt-2">Future: {gate.future}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="bg-purple-400/10 p-6 rounded-xl mt-6">
+                      <h3 className="text-xl text-purple-400 mb-3">Cool Quantum Facts</h3>
+                      <p className="text-sm">
+                        The Hadamard gate we use puts our qubit in a perfect 50-50 superposition, 
+                        making our quantum coin flip truly random, unlike classical random number generators!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.section>
             </div>
           </div>
 
