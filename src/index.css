@@ -2,24 +2,113 @@
 @tailwind components;
 @tailwind utilities;
 
-@keyframes flip {
-  0% { transform: rotateY(0deg); }
-  100% { transform: rotateY(720deg); }
+/* Quantum Background Effects */
+.quantum-grid {
+  background-image: 
+    linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  width: 100%;
+  height: 100%;
+  animation: gridMove 20s linear infinite;
 }
 
-@keyframes quantum-glitch {
-  0% { opacity: 1; filter: hue-rotate(0deg) brightness(1); }
-  25% { opacity: 0.9; filter: hue-rotate(90deg) brightness(1.2); }
-  50% { opacity: 1; filter: hue-rotate(180deg) brightness(1); }
-  75% { opacity: 0.9; filter: hue-rotate(270deg) brightness(1.2); }
-  100% { opacity: 1; filter: hue-rotate(360deg) brightness(1); }
+.quantum-particles {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: particlePulse 4s ease-in-out infinite;
 }
 
-.fade-in {
-  opacity: 0;
-  animation: fadeIn 0.5s forwards;
+.quantum-orb {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(0, 255, 255, 0.2), rgba(0, 0, 0, 0.5));
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes fadeIn {
-  to { opacity: 1; }
+.quantum-button {
+  @apply px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 
+         text-white rounded-full font-bold shadow-lg flex items-center
+         disabled:opacity-50 disabled:cursor-not-allowed
+         transition-all duration-300;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.quantum-circuit-display {
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  background: rgba(0, 255, 255, 0.05);
+}
+
+.quantum-circuit-display svg {
+  filter: drop-shadow(0 0 2px rgba(0, 255, 255, 0.5));
+}
+
+.quantum-stats-item {
+  @apply flex justify-between items-center py-2 border-b border-cyan-900/30;
+}
+
+.flip-history-item {
+  @apply flex justify-between items-center p-2 rounded-lg
+         bg-gradient-to-r from-black/20 to-black/10
+         backdrop-blur-sm transition-all duration-300;
+}
+
+.flip-history-item:hover {
+  @apply bg-white/10;
+}
+
+/* Add animations */
+@keyframes gridMove {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(50px); }
+}
+
+@keyframes particlePulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+/* Enhanced coin styles */
+.coin-container {
+  transform-style: preserve-3d;
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+
+.coin {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.coin-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  backface-visibility: hidden;
+  background: linear-gradient(45deg, #ffd700, #ffaa00);
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.coin-face.tails {
+  background: linear-gradient(45deg, #c0c0c0, #808080);
+  transform: rotateY(180deg);
 }
