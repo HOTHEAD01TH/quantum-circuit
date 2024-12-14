@@ -26,7 +26,7 @@ A beautiful and interactive quantum computing demonstration that simulates a qua
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/quantum-coin-flip.git
+git clone https://github.com/HOTHEAD01TH/quantum-circuit.git
 ```
 
 2. Navigate to the project directory:
